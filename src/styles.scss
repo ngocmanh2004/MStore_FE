@@ -1,1 +1,111 @@
-/* You can add global styles to this file, and also import other style files */
+/* --- 1. Import CSS của Swiper (BẮT BUỘC Ở TRÊN CÙNG) --- */
+@use 'swiper/css';
+@use 'swiper/css/navigation';
+@use 'swiper/css/pagination';
+
+/* --- 2. Import Font (Be Vietnam Pro) --- */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
+/* --- 3. Định nghĩa biến màu (LIGHT MODE) --- */
+:root {
+  --primary-color: #7c3aed; /* Tím */
+  --primary-color-dark: #6d28d9;
+  
+  /* Màu nền & Chữ (Theme Sáng) */
+  --light-bg: #FFFFFF;     /* Nền chính (Trắng) */
+  --gray-bg: #f3f4f6;       /* Nền phụ (Xám nhạt cho card) */
+  --text-dark: #0f172a;     /* Chữ đen (Xanh than) */
+  --text-gray: #64748b;     /* Chữ xám */
+  --border-color: #e5e7eb;  /* Viền xám nhạt */
+
+  /* Màu cho nền tối (Footer, Banner) */
+  --dark-section-bg: #0f172a; 
+  --text-white: #ffffff;
+  --text-gray-dark-bg: #cbd5e1;
+  --border-dark-bg: #334155;
+
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  
+  /* Biến cho Swiper */
+  --swiper-theme-color: var(--primary-color);
+  --swiper-pagination-bullet-inactive-color: var(--border-color);
+  --swiper-navigation-color: var(--text-white);
+  --swiper-navigation-size: 28px;
+}
+
+/* 4. Reset CSS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: var(--light-bg); /* NỀN TRẮNG */
+  color: var(--text-gray);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* 5. Style cho các nút (Button) */
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border-color: var(--primary-color);
+  
+  &:hover {
+    background-color: var(--primary-color-dark);
+    border-color: var(--primary-color-dark);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-dark); /* Chữ đen */
+  border-color: var(--border-color); /* Viền xám */
+  
+  &:hover {
+    background-color: var(--gray-bg);
+    border-color: var(--text-gray);
+  }
+}
+/* ... (Toàn bộ code cũ của file) ... */
+
+/* --- THÊM VÀO CUỐI FILE: LÀM RÕ NÚT BANNER --- */
+.hero-swiper::part(button-next),
+.hero-swiper::part(button-prev) {
+  background-color: rgba(0, 0, 0, 0.3); /* Nền đen mờ */
+  width: 44px;  /* Tăng kích thước */
+  height: 44px;
+  border-radius: 50%; /* Bo tròn */
+  transition: background-color 0.2s ease;
+}
+
+.hero-swiper::part(button-next):hover,
+.hero-swiper::part(button-prev):hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Đậm hơn khi hover */
+}

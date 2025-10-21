@@ -1,0 +1,17 @@
+<section class="featured-products-section">
+  <div class="container">
+    
+    <div class="section-header">
+      <h2>Sản phẩm nổi bật</h2>
+      <a routerLink="/products" class="btn btn-secondary">Xem tất cả</a>
+    </div>
+
+    <div class="products-grid">
+      <app-product-card 
+        *ngFor="let product of mockProducts" 
+        [product]="product"> 
+      </app-product-card>
+    </div>
+    
+  </div>
+</section>

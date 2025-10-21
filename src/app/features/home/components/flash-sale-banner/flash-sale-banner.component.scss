@@ -1,0 +1,136 @@
+.flash-sale-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #1e1b4b 0%, #3b0764 100%); /* Gradient tím đậm hơn footer */
+  color: var(--text-gray-dark-bg);
+  overflow: hidden; 
+  position: relative; 
+}
+
+.flash-sale-section::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -30%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0) 70%);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+.flash-sale-section::after {
+   content: '';
+  position: absolute;
+  bottom: -40%; left: -20%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, rgba(236, 72, 153, 0) 70%);
+  border-radius: 50%;
+   z-index: 1;
+   pointer-events: none;
+}
+
+
+.flash-sale-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  position: relative; /* Đè lên hiệu ứng background */
+  z-index: 2;
+}
+
+/* --- Phần bên trái --- */
+.sale-info {
+  h2 {
+    font-size: 2.5rem; color: var(--text-white); font-weight: 800;
+    margin: 0.5rem 0 1rem;
+  }
+  p { line-height: 1.7; }
+}
+
+.flash-sale-tag {
+  display: inline-block; background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-white); padding: 0.3rem 0.8rem; border-radius: 99px;
+  font-size: 0.8rem; font-weight: 600;
+}
+
+.countdown-timer {
+  margin: 2rem 0;
+  p { font-weight: 500; color: var(--text-white); margin-bottom: 0.5rem; }
+}
+.timer-blocks { display: flex; gap: 1rem; }
+.timer-block {
+  background-color: rgba(255, 255, 255, 0.1); padding: 0.75rem 1rem;
+  border-radius: 8px; text-align: center; min-width: 60px;
+  border: 1px solid var(--border-dark-bg);
+  .time-value {
+    display: block; font-size: 1.75rem; font-weight: 700;
+    color: var(--text-white); line-height: 1.2;
+  }
+  .time-label { font-size: 0.75rem; text-transform: uppercase; }
+}
+
+.sale-actions {
+  display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;
+  .btn-buy {
+    padding: 0.8rem 1.5rem; background-color: #f59e0b; border-color: #f59e0b;
+    color: var(--text-dark);
+    &:hover { background-color: #d97706; border-color: #d97706; }
+  }
+  .btn-view {
+     padding: 0.8rem 1.5rem; border-color: var(--primary-color);
+     color: var(--primary-color);
+     &:hover { background-color: rgba(124, 58, 237, 0.1); }
+  }
+}
+
+/* --- Phần bên phải --- */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.info-box {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 12px; padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease, border-color 0.2s ease; /* Thêm transition */
+
+  i {
+    font-size: 1.5rem; color: var(--primary-color);
+    margin-bottom: 0.75rem; display: block;
+  }
+  h4 {
+    color: var(--text-white); font-size: 1rem;
+    font-weight: 600; margin-bottom: 0.25rem;
+  }
+  p { font-size: 0.85rem; }
+  
+  /* --- THÊM HOVER EFFECT --- */
+  &:hover {
+    background: rgba(255, 255, 255, 0.1); /* Sáng hơn chút */
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  /* --- KẾT THÚC HOVER --- */
+
+  &.special-offer {
+    grid-column: span 2;
+    ul { list-style: none; padding: 0; margin-top: 0.5rem;
+      li { position: relative; padding-left: 1.2em; margin-bottom: 0.3rem;
+        &::before { content: '✓'; color: #16a34a; position: absolute; left: 0; }
+      }
+    }
+  }
+}
+
+/* --- Responsive --- */
+@media (min-width: 1024px) {
+  .flash-sale-container {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: center;
+  }
+  .sale-info h2 { font-size: 3rem; }
+  .timer-blocks { gap: 1.5rem; }
+  .timer-block { padding: 1rem 1.25rem; min-width: 70px; }
+  .timer-block .time-value { font-size: 2rem; }
+  .info-grid { gap: 1.5rem; }
+}

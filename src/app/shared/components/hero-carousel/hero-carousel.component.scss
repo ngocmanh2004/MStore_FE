@@ -1,0 +1,159 @@
+.hero-section {
+  padding-top: 0;
+  background-color: var(--light-bg);
+}
+
+.hero-container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.hero-swiper {
+  border-radius: 0;
+  overflow: hidden;
+  min-height: calc(100vh - 70px); 
+}
+
+.slide-item {
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+
+  /* --- SỬA LẠI 4 SLIDE --- */
+  &.slide-iphone17 { /* Sửa tên class */
+    background-image: url('https://cdn2.cellphones.com.vn/insecure/rs:fill:1036:450/q:90/plain/https://dashboard.cellphones.com.vn/storage/690x300_iPhone_17_Pro_Opensale_v3.png');
+    background-color: #000;
+  } 
+  &.slide-ipad { /* Sửa tên class */
+    background-image: url('https://cdn2.cellphones.com.vn/insecure/rs:fill:1036:450/q:90/plain/https://dashboard.cellphones.com.vn/storage/690x300_iPad_Pro_M5_dknt.png');
+    background-color: #f0f0f0; /* Nền sáng */
+  }
+  &.slide-watch { /* Sửa tên class */
+    background-image: url('https://cdn2.cellphones.com.vn/insecure/rs:fill:1036:450/q:90/plain/https://dashboard.cellphones.com.vn/storage/AW11-opensale.png');
+    background-color: #f0f0f0; /* Nền sáng */
+  }
+  &.slide-redmi { /* Sửa tên class */
+    background-image: url('https://cdn2.cellphones.com.vn/insecure/rs:fill:1036:450/q:90/plain/https://dashboard.cellphones.com.vn/storage/Sliding_Redmi_15C.png');
+    background-color: #f0f0f0; /* Nền sáng */
+  }
+  /* --- KẾT THÚC SỬA --- */
+}
+
+.slide-content {
+  display: flex;
+  align-items: center;
+  padding: 2rem 5rem;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  color: var(--text-white); /* Mặc định chữ trắng */
+  position: relative;
+  z-index: 2;
+  
+  /* Lớp phủ gradient đen mờ bên trái */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 60%;
+    background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+  }
+}
+
+/* Các slide nền sáng sẽ có chữ đen */
+.slide-ipad .slide-content,
+.slide-watch .slide-content,
+.slide-redmi .slide-content {
+  color: var(--text-dark); /* Chữ đen */
+  &::before {
+    /* Lớp phủ trắng mờ */
+    background: linear-gradient(to right, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+  }
+}
+
+.slide-text {
+  position: relative;
+  z-index: 3;
+  max-width: 500px;
+  text-align: left;
+  
+  .promo-tag {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--text-white);
+    padding: 0.25rem 0.75rem; border-radius: 99px;
+    font-size: 0.8rem; font-weight: 500;
+  }
+  /* Tag trên nền sáng */
+  .slide-ipad & .promo-tag,
+  .slide-watch & .promo-tag,
+  .slide-redmi & .promo-tag {
+    background-color: rgba(0,0,0,0.1);
+    color: var(--text-dark);
+  }
+
+  h1 { 
+    font-size: 3.25rem; margin: 0.75rem 0; 
+    font-weight: 800; letter-spacing: -1.5px;
+  }
+  p { 
+    display: block; font-size: 1rem;
+    color: var(--text-gray-dark-bg); /* Chữ xám trên nền tối */
+    margin-bottom: 1.5rem;
+  }
+  /* Chữ p trên nền sáng */
+  .slide-ipad & p,
+  .slide-watch & p,
+  .slide-redmi & p { 
+    color: var(--text-gray); 
+  }
+
+  .price { 
+    margin: 1rem 0; 
+    .new-price { font-size: 1.75rem; font-weight: 700; margin-right: 0.5rem; }
+    .old-price { text-decoration: line-through; color: var(--text-gray-dark-bg); }
+    /* Giá cũ trên nền sáng */
+    .slide-ipad & .old-price,
+    .slide-watch & .old-price,
+    .slide-redmi & .old-price { 
+      color: var(--text-gray); 
+    }
+  }
+  
+  .slide-actions {
+    margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-start;
+    .btn-secondary { /* Nút secondary trên nền tối */
+      background-color: transparent; color: var(--text-white); border-color: var(--border-dark-bg);
+      &:hover { background-color: rgba(255,255,255,0.1); border-color: var(--text-white); }
+    }
+    /* Nút secondary trên nền sáng */
+    .slide-ipad & .btn-secondary,
+    .slide-watch & .btn-secondary,
+    .slide-redmi & .btn-secondary {
+      color: var(--text-dark); border-color: var(--border-color);
+      &:hover { background-color: var(--gray-bg); }
+    }
+  }
+}
+
+/* --- Responsive cho Mobile --- */
+@media (max-width: 767.98px) {
+  .hero-swiper { min-height: 500px; }
+  .slide-content {
+    min-height: 500px; padding: 2rem 1.5rem;
+    &::before { /* Lớp phủ full */
+      width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    }
+    /* Lớp phủ trắng full */
+    .slide-ipad &::before,
+    .slide-watch &::before,
+    .slide-redmi &::before {
+      background: linear-gradient(to top, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+    }
+  }
+  .slide-text {
+    max-width: 100%; text-align: center;
+    h1 { font-size: 2.25rem; }
+    .slide-actions { justify-content: center; }
+  }
+}

@@ -1,0 +1,28 @@
+<section class="product-carousel-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Deal Sốc Cuối Tuần 🔥</h2> 
+    </div>
+
+    <swiper-container 
+      class="product-swiper"
+      slides-per-view="2" 
+      space-between="16" 
+      navigation="true" 
+      pagination="false" 
+      loop="true" 
+      autoplay-delay="3000"
+      autoplay-disable-on-interaction="false"
+      breakpoints='{
+        "640": { "slidesPerView": 3, "spaceBetween": 20 },
+        "1024": { "slidesPerView": 4, "spaceBetween": 24 },
+        "1280": { "slidesPerView": 5, "spaceBetween": 24 }
+      }'
+    >
+      <swiper-slide *ngFor="let product of carouselProducts">
+        <app-product-card [product]="product"></app-product-card>
+      </swiper-slide>
+    </swiper-container>
+    
+  </div>
+</section>

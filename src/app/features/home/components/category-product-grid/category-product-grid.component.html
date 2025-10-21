@@ -1,0 +1,32 @@
+<section class="category-grid-section">
+  <div class="container">
+    
+    <div *ngFor="let group of categoryGroups" class="category-block">
+      
+      <div class="category-header">
+        <h2>{{ group.categoryName }} NỔI BẬT NHẤT</h2>
+        <div class="brand-pills">
+          <a *ngFor="let brand of group.brands" [routerLink]="brand.link" class="brand-pill">
+            {{ brand.name }}
+          </a>
+        </div>
+      </div>
+
+      <div class="products-grid-2rows">
+        <app-product-card 
+          *ngFor="let product of group.products" 
+          [product]="product">
+        </app-product-card>
+      </div>
+
+      <div class="view-more-container">
+        <a [routerLink]="['/products', group.categoryId]" class="btn btn-primary btn-view-more">
+          Xem thêm {{ group.categoryName }}
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+
+    </div> 
+
+  </div>
+</section>

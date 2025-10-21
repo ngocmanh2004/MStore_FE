@@ -1,0 +1,39 @@
+.featured-products-section {
+  padding: 3rem 0;
+  background-color: var(--gray-bg); /* Nền xám nhạt cho cả section */
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-size: 1.5rem;
+    color: var(--text-dark); /* Chữ đen */
+    font-weight: 700;
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cột mobile */
+  gap: 1rem; 
+}
+
+/* Tablet (768px) */
+@media (min-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .section-header h2 { font-size: 1.75rem; }
+}
+
+/* Desktop (1024px) */
+@media (min-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

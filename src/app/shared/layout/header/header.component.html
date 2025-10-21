@@ -1,0 +1,57 @@
+<header class="main-header">
+  <div class="header-container">
+    <div class="container-inner"> 
+      
+      <div class="header-left">
+        <a routerLink="/" class="header-logo">
+          <span>MStore</span>
+        </a>
+        <nav class="header-nav-desktop">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Trang chủ</a>
+          <a routerLink="/products/laptop" routerLinkActive="active">Laptop</a>
+          <a routerLink="/products/phone" routerLinkActive="active">Điện thoại</a>
+          <a routerLink="/products/tablet" routerLinkActive="active">Máy tính bảng</a>
+          <a routerLink="/products/accessory" routerLinkActive="active">Phụ kiện</a>
+        </nav>
+      </div>
+      
+      <form class="header-search-desktop">
+        <button type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+        <input type="text" placeholder="Tìm kiếm sản phẩm, thương hiệu...">
+      </form>
+
+      <div class="header-right">
+        <button class="action-btn icon-btn search-btn-mobile">
+          <i class="bi bi-search"></i>
+        </button>
+
+        <a routerLink="/cart" class="action-btn icon-btn cart-btn-mobile">
+          <i class="bi bi-cart3"></i>
+          <span class="action-badge">3</span>
+        </a>
+
+        <a routerLink="/cart" class="btn btn-cart-desktop">
+          <span>Giỏ hàng</span>
+          <i class="bi bi-cart3"></i>
+          <span class="action-badge">3</span>
+        </a>
+
+        <a routerLink="/auth/login" class="action-btn icon-btn user-btn-mobile">
+          <i class="bi bi-person"></i>
+        </a>
+
+        <a routerLink="/auth/login" class="btn btn-login-desktop">
+          <span>Đăng nhập</span>
+          <i class="bi bi-person-circle"></i>
+        </a>
+            
+        <button class="action-btn icon-btn mobile-toggle">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+
+    </div> 
+  </div> 
+</header>

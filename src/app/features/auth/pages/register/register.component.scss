@@ -1,0 +1,51 @@
+@import '../../_auth-styles.scss'; /* Import style chung */
+
+/* --- Style riêng cho trang Register --- */
+
+.form-row {
+  display: flex;
+  flex-direction: column; 
+  gap: 1rem; 
+  width: 100%;
+  
+  .form-group {
+    flex: 1; 
+    min-width: 0; 
+  }
+}
+
+/* Chỉ xếp ngang Họ và Tên trên màn hình lớn hơn (Tablet trở lên) */
+@media (min-width: 576px) { /* Hoặc dùng var(--breakpoint-sm) nếu có */
+  .form-row {
+    flex-direction: row; /* Xếp ngang lại */
+  }
+}
+
+
+/* Cần class này để thông báo lỗi chiếm full width */
+.invalid-feedback.full-width {
+  width: 100%;
+}
+
+.terms {
+  display: flex;
+  align-items: flex-start; /* Căn trên cho checkbox */
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  
+  input[type="checkbox"] {
+     margin-top: 3px; /* Căn chỉnh checkbox */
+     flex-shrink: 0;
+  }
+  
+  label {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    line-height: 1.4; /* Cho dễ đọc */
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
