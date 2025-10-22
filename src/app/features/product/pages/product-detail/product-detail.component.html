@@ -1,0 +1,102 @@
+<div class="page-container" *ngIf="product; else loading">
+
+  <nav class="breadcrumb">
+    <a routerLink="/">Trang chủ</a>
+    <i class="bi bi-chevron-right"></i>
+    <a routerLink="/products/category/{{ product.categoryName | lowercase }}">{{ product.categoryName }}</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>{{ product.productName }}</span>
+  </nav>
+
+  <section class="product-main-layout">
+    <div class="gallery-wrapper">
+      <app-product-gallery 
+        [images]="currentVariantImages">
+      </app-product-gallery>
+    </div>
+
+    <div class="info-wrapper">
+      <app-product-info
+        [productName]="product.productName"
+        [averageRating]="product.averageRating"
+        [reviewCount]="product.reviewCount"
+        [allVariants]="product.variants"
+        [availableOptions]="product.availableOptions"
+        (variantChanged)="onVariantChanged($event)"
+        (addToCart)="onAddToCart($event)">
+      </app-product-info>
+    </div>
+  </section>
+
+  <section class="product-details-tabs">
+    <div class="tab-headers">
+      <button 
+        class="tab-link" 
+        [class.active]="activeTab === 'description'" 
+        (click)="selectTab('description')">
+        <i class="bi bi-file-text-fill"></i> Mô tả sản phẩm
+      </button>
+      <button 
+        class="tab-link" 
+        [class.active]="activeTab === 'specs'" 
+        (click)="selectTab('specs')">
+        <i class="bi bi-card-checklist"></i> Thông số kỹ thuật
+      </button>
+      <button 
+        class="tab-link" 
+        [class.active]="activeTab === 'reviews'" 
+        (click)="selectTab('reviews')">
+        <i class="bi bi-chat-left-text-fill"></i> Đánh giá ({{ product.reviewCount }})
+      </button>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane" *ngIf="activeTab === 'description'">
+        <h3>Mô tả sản phẩm</h3>
+        <div class="description-content" [innerHTML]="product.description"></div>
+      </div>
+
+      <div class="tab-pane" *ngIf="activeTab === 'specs'">
+        <h3>Thông số kỹ thuật</h3>
+        <ul class="specs-list">
+          <li *ngFor="let spec of product.specifications">
+            <span class="spec-name">{{ spec.specName }}</span>
+            <span class="spec-value">{{ spec.specValue }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-pane" *ngIf="activeTab === 'reviews'">
+        <h3>Đánh giá khách hàng ({{ product.reviewCount }})</h3>
+        <div classs="reviews-list">
+          <div class="review-item" *ngFor="let review of product.reviews">
+            <div class="review-header">
+              <span class="review-user"><i class="bi bi-person-circle"></i> {{ review.userName }}</span>
+              <span class="review-date">{{ review.createdAt }}</span>
+            </div>
+            <div class="review-rating">
+              <i class="bi bi-star-fill" *ngFor="let i of [].constructor(review.rating)"></i>
+              <i class="bi bi-star" *ngFor="let i of [].constructor(5 - review.rating)"></i>
+            </div>
+            <p class="review-content">{{ review.content }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-products">
+    <h2>Sản phẩm liên quan</h2>
+    <div class="products-grid">
+      <app-product-card 
+        *ngFor="let related of product.relatedProducts"
+        [product]="related">
+      </app-product-card>
+    </div>
+  </section>
+
+</div>
+
+<ng-template #loading>
+  <p>Đang tải dữ liệu sản phẩm...</p>
+</ng-template>

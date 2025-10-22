@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// --- TRẢ LẠI ĐƯỜNG DẪN GỐC ---
 import { Product } from '../../../../core/models/product.model'; 
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
-// ----------------------------
 import { RouterModule } from '@angular/router';
 
 @Component({

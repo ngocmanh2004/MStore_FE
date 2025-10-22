@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import { PublicLayoutComponent } from './shared/layout/public-layout/public-layout.component';
 import { HomeComponent } from './features/home/home.component';
 import { AuthLayoutComponent } from './features/auth/layout/auth-layout/auth-layout.component'; 
+import { ProductDetailComponent } from './features/product/pages/product-detail/product-detail.component';
 
 export const routes: Routes = [
-  // --- Route cho các trang Public (có Header/Footer) ---
   {
     path: '',
     component: PublicLayoutComponent, 
@@ -12,15 +12,17 @@ export const routes: Routes = [
       {
         path: '', 
         component: HomeComponent 
+      },
+      {
+        path: 'products/:slug',
+        component: ProductDetailComponent
       }
     ]
   },
 
   {
-    path: 'auth', // Các đường dẫn bắt đầu bằng /auth
+    path: 'auth', 
     component: AuthLayoutComponent, 
-    // Load các route con từ file auth.routes.ts
     loadChildren: () => import('./features/auth/auth.routes').then(r => r.AUTH_ROUTES) 
   }
-  // -------------------------
 ];

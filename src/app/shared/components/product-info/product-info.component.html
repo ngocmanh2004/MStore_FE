@@ -1,0 +1,83 @@
+<div class="info-container">
+  <h1 class="product-name">{{ productName }}</h1>
+  
+  <div class="rating-summary">
+    <span class="stars">
+      <i class="bi bi-star-fill"></i> {{ averageRating.toFixed(1) }}
+    </span>
+    <span class="reviews">({{ reviewCount }} đánh giá)</span>
+    <span class="genuine" *ngIf="currentVariant">
+      <i class="bi bi-check-circle-fill"></i> Còn hàng
+    </span>
+  </div>
+
+  <div class="price-section" *ngIf="currentVariant; else variantNotFound">
+    <span class="current-price">{{ currentVariant.price | number }}đ</span>
+    <span class="old-price" *ngIf="currentVariant.oldPrice">{{ currentVariant.oldPrice | number }}đ</span>
+    <span class="saving" *ngIf="currentVariant.oldPrice">
+      Tiết kiệm {{ (currentVariant.oldPrice - currentVariant.price) | number }}đ
+    </span>
+  </div>
+  <ng-template #variantNotFound>
+    <div class="variant-not-found">
+      Lựa chọn này không có sẵn.
+    </div>
+  </ng-template>
+
+  <div class="options-section" *ngFor="let option of availableOptions">
+    <label class="option-label">{{ option.name }}:</label>
+    <div class="option-values">
+      <button
+        *ngFor="let value of option.values"
+        class="option-btn"
+        [class.active]="selectedOptions[option.name] === value"
+        [class.out-of-stock]="isOptionOutOfStock(option.name, value)"
+        (click)="selectOption(option.name, value)">
+        
+        {{ value }}
+        
+        <span *ngIf="isOptionOutOfStock(option.name, value); else availableStock">
+          Hết hàng
+        </span>
+        <ng-template #availableStock>
+          <span *ngIf="currentVariant">{{ currentVariant.price | number }}đ</span>
+        </ng-template>
+      </button>
+    </div>
+  </div>
+
+  <div class="quantity-section">
+    <label class="option-label">Số lượng</label>
+    <div class="quantity-control">
+      <button class="quantity-btn" (click)="changeQuantity(-1)" [disabled]="quantity <= 1">-</button>
+      <input type="number" class="quantity-input" [(ngModel)]="quantity" min="1" [max]="currentVariant?.stockQuantity || 1">
+      <button class="quantity-btn" (click)="changeQuantity(1)" [disabled]="!currentVariant || quantity >= currentVariant.stockQuantity">+</button>
+    </div>
+    <span class="stock-info" *ngIf="currentVariant">
+      Còn lại {{ currentVariant.stockQuantity }} sản phẩm
+    </span>
+  </div>
+
+  <div class="action-buttons">
+    <button 
+      class="btn btn-primary btn-add-cart" 
+      (click)="onAddToCart()"
+      [disabled]="!currentVariant || currentVariant.stockQuantity === 0">
+      <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+    </button>
+    <button 
+      class="btn btn-danger btn-buy-now"
+      [disabled]="!currentVariant || currentVariant.stockQuantity === 0">
+      Mua ngay
+    </button>
+  </div>
+
+  <div class="policy-box">
+    <strong>Ưu đãi đặc biệt:</strong>
+    <ul>
+      <li><i class="bi bi-gift-fill"></i> Miễn phí vận chuyển cho đơn hàng trên 50 triệu.</li>
+      <li><i class="bi bi-shield-check"></i> Đổi mới sản phẩm lỗi trong vòng 30 ngày.</li>
+      <li><i class="bi bi-tools"></i> Hỗ trợ kỹ thuật 24/7.</li>
+    </ul>
+  </div>
+</div>

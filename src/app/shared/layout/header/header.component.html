@@ -1,20 +1,28 @@
-<header class="main-header">
+<header class="main-header" [class.scrolled]="isScrolled" [class.hidden-header]="isHidden">
   <div class="header-container">
-    <div class="container-inner"> 
-      
+    <div class="container-inner">
+
       <div class="header-left">
         <a routerLink="/" class="header-logo">
           <span>MStore</span>
         </a>
         <nav class="header-nav-desktop">
           <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Trang chủ</a>
-          <a routerLink="/products/laptop" routerLinkActive="active">Laptop</a>
-          <a routerLink="/products/phone" routerLinkActive="active">Điện thoại</a>
-          <a routerLink="/products/tablet" routerLinkActive="active">Máy tính bảng</a>
-          <a routerLink="/products/accessory" routerLinkActive="active">Phụ kiện</a>
+
+          <ng-container *ngIf="mainCategories$ | async as categories">
+            <div class="nav-item-dropdown" *ngFor="let category of categories">
+              <a [routerLink]="['/products/category', category.slug]" routerLinkActive="active">{{ category.name }}</a>
+
+              <div *ngIf="category.children.length" class="dropdown-menu">
+                <ng-container *ngFor="let child of category.children">
+                  <a [routerLink]="['/products/category', child.slug]" class="dropdown-item">{{ child.name }}</a>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
         </nav>
       </div>
-      
+
       <form class="header-search-desktop">
         <button type="submit">
           <i class="bi bi-search"></i>
@@ -46,12 +54,12 @@
           <span>Đăng nhập</span>
           <i class="bi bi-person-circle"></i>
         </a>
-            
+
         <button class="action-btn icon-btn mobile-toggle">
           <i class="bi bi-list"></i>
         </button>
       </div>
 
-    </div> 
-  </div> 
+    </div>
+  </div>
 </header>
