@@ -1,4 +1,4 @@
-<header class="main-header" [class.scrolled]="isScrolled" [class.hidden-header]="isHidden">
+<header class="main-header" [ngClass]="{ 'scrolled': isScrolled, 'hidden': isHidden }">
   <div class="header-container">
     <div class="container-inner">
 

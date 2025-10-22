@@ -1,0 +1,205 @@
+.product-list-page {
+  .breadcrumb { margin-bottom: 1.5rem; }
+}
+
+.list-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem; // Giảm gap mobile
+
+  @media (min-width: 992px) { // Chuyển sang 2 cột ở 992px
+    grid-template-columns: 280px 1fr; // Sidebar rộng hơn
+    gap: 2rem;
+  }
+}
+
+// Sidebar Filters
+.filters-sidebar {
+  border: none; // Bỏ border
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: var(--light-bg); // Nền trắng/sáng
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); // Thêm shadow nhẹ
+  align-self: start;
+
+  @media (min-width: 992px) {
+    position: sticky; // Sticky trên desktop
+    top: 90px; // Cách header 1 khoảng
+  }
+
+  h3 {
+    font-size: 1.1rem; // Giảm size chữ
+    margin-bottom: 1rem; // Giảm margin
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600; // Đậm hơn
+    color: var(--text-dark);
+  }
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
+  h4 {
+    font-size: 0.95rem; // Giảm size
+    font-weight: 600;
+    margin-bottom: 1rem; // Tăng margin dưới
+    color: var(--text-dark);
+  }
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; // Tăng gap giữa các item
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem; // Tăng gap giữa checkbox/radio và label
+  }
+  .form-check-input {
+    cursor: pointer;
+    width: 1.1em; // Cho checkbox/radio to hơn
+    height: 1.1em;
+    margin-top: 0; // Căn giữa với text
+    &:checked {
+       background-color: var(--primary-color);
+       border-color: var(--primary-color);
+    }
+     &:focus {
+       box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25); // Thêm focus style
+    }
+  }
+  .form-check-label {
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--text-gray); // Màu chữ xám
+    transition: color 0.2s;
+    &:hover {
+       color: var(--text-dark); // Đậm hơn khi hover
+    }
+  }
+}
+
+// Style riêng cho checkbox brand
+.filter-options.brands .form-check-input[type="checkbox"] {
+   border-radius: 4px; // Vuông hơn
+}
+
+// Style riêng cho radio price
+.filter-options.prices .form-check-input[type="radio"] {
+   // Giữ nguyên bo tròn mặc định
+}
+
+
+.btn-clear-filters {
+   width: 100%;
+   margin-top: 1rem;
+   font-size: 0.85rem; // Chữ nhỏ hơn
+   padding: 0.5rem 1rem;
+   background-color: var(--gray-bg);
+   border-color: var(--border-color);
+   color: var(--text-gray);
+    &:hover {
+      background-color: #e5e7eb;
+      border-color: #d1d5db;
+      color: var(--text-dark);
+    }
+}
+
+// Main content
+.products-main {
+  min-width: 0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+}
+
+.item-count {
+   font-size: 0.9rem;
+   color: var(--text-gray);
+   margin-bottom: 1rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(2, 1fr); // Vẫn 2 cột trên tablet nhỏ
+  }
+   @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr); // 3 cột trên tablet lớn
+    gap: 1.5rem;
+  }
+   @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr); // 4 cột desktop lớn
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination-list {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+}
+
+.page-item {
+  margin: 0 2px;
+
+  &.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6;
+  }
+  &.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  line-height: 1.25;
+  color: var(--primary-color);
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    z-index: 2;
+    color: var(--primary-color-dark);
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+  }
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { ActivatedRoute, RouterModule, ParamMap } from '@angular/router'; // Thêm ParamMap
+import { Observable, of, switchMap } from 'rxjs'; // Thêm switchMap
 import { catchError, tap } from 'rxjs/operators';
 import { ProductService } from '../../../../core/services/product.service';
 import { ProductDetailDto, ImageDto } from '../../../../core/models/product-detail.dto';
@@ -33,27 +33,37 @@ export class ProductDetailComponent implements OnInit {
   currentVariantImages: ImageDto[] = [];
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug');
+    console.log('ProductDetailComponent OnInit'); // LOG 1: Component có chạy OnInit không?
 
-    if (slug) {
-      this.product$ = this.productService.getProductBySlug(slug).pipe(
-        tap(data => {
-          if (data?.variants?.length > 0) {
-            this.currentVariantImages = data.variants[0].images;
-          }
+    this.product$ = this.route.paramMap.pipe(
+      tap(params => console.log('ParamMap changed:', params.get('slug'))), // LOG 2: Slug có thay đổi không?
+      switchMap((params: ParamMap) => {
+        const slug = params.get('slug');
+        console.log('SwitchMap triggered with slug:', slug); // LOG 3: switchMap có chạy không?
+        if (slug) {
           this.errorLoadingProduct = false;
-          window.scrollTo(0, 0);
-        }),
-        catchError(err => {
-          console.error('Lỗi khi tải sản phẩm:', err);
+          console.log('Calling getProductBySlug for:', slug); // LOG 4: Có gọi service không?
+          return this.productService.getProductBySlug(slug).pipe(
+            tap(data => {
+              console.log('Received product data:', data); // LOG 5: Dữ liệu trả về là gì?
+              if (data?.variants?.length > 0) {
+                this.currentVariantImages = data.variants[0].images;
+              }
+              window.scrollTo(0, 0);
+            }),
+            catchError(err => {
+              console.error('Lỗi khi tải sản phẩm:', err);
+              this.errorLoadingProduct = true;
+              return of(null);
+            })
+          );
+        } else {
+          console.error('Không tìm thấy slug sản phẩm!');
           this.errorLoadingProduct = true;
           return of(null);
-        })
-      );
-    } else {
-      console.error('Không tìm thấy slug sản phẩm!');
-      this.errorLoadingProduct = true;
-    }
+        }
+      })
+    );
   }
 
   onVariantChanged(images: ImageDto[]): void {

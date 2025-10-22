@@ -29,6 +29,7 @@ export class CategoryProductGridComponent implements OnInit {
   loadingError = false;
 
   ngOnInit(): void {
+    console.log('CategoryProductGridComponent OnInit');
     this.categoryGroups$ = this.productService.getCategories().pipe(
       // Bỏ dòng map filter ở đây
       switchMap(rootCategories => {

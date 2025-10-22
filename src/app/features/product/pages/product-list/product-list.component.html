@@ -1,0 +1,95 @@
+<div class="page-container product-list-page">
+    <nav class="breadcrumb">
+        <a routerLink="/">Trang chủ</a>
+        <i class="bi bi-chevron-right"></i>
+        <a routerLink="/products">Sản phẩm</a>
+        <ng-container *ngIf="currentCategorySlug">
+            <i class="bi bi-chevron-right"></i>
+            <span>{{ currentCategorySlug | titlecase }}</span>
+        </ng-container>
+    </nav>
+
+    <div class="list-layout">
+        <aside class="filters-sidebar">
+            <h3><i class="bi bi-funnel-fill"></i> Bộ lọc</h3>
+
+            <div class="filter-group">
+                <h4>Thương hiệu</h4>
+                <div class="filter-options brands" *ngIf="(brands$ | async) as brands">
+                    <div *ngFor="let brand of brands" class="form-check">
+                        <input class="form-check-input" type="radio" name="brand" [id]="'brand-' + brand.brandId"
+                            [value]="brand.name" [(ngModel)]="selectedBrand" (change)="applyFilters()">
+                        <label class="form-check-label" [for]="'brand-' + brand.brandId">
+                            {{ brand.name }}
+                        </label>
+                    </div>
+
+
+                    <p *ngIf="brands.length === 0">Không có thương hiệu.</p>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Khoảng giá</h4>
+                <div class="filter-options prices">
+                    <div *ngFor="let range of priceRanges" class="form-check">
+                        <input class="form-check-input" type="radio" name="priceRange" [id]="'price-' + range.value"
+                            [value]="range.value" [(ngModel)]="selectedPriceRange" (change)="applyFilters()">
+                        <label class="form-check-label" [for]="'price-' + range.value">
+                            {{ range.label }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary btn-clear-filters" (click)="clearFilters()">Xóa bộ lọc</button>
+
+        </aside>
+
+        <main class="products-main">
+            <div class="list-header">
+                <h1 *ngIf="currentCategorySlug">{{ currentCategorySlug | titlecase }}</h1>
+                <h1 *ngIf="!currentCategorySlug">Tất cả sản phẩm</h1>
+                <div class="sort-options">
+                </div>
+            </div>
+
+            <div *ngIf="(productsResponse$ | async) as response; else loadingOrError">
+                <p class="item-count" *ngIf="response.totalItems > 0">Hiển thị {{ response.items.length }} trên {{
+                    response.totalItems }} sản phẩm</p>
+                <p class="item-count" *ngIf="response.totalItems === 0">Không tìm thấy sản phẩm nào phù hợp.</p>
+
+                <div class="products-grid">
+                    <app-product-card *ngFor="let product of response.items" [product]="product">
+                    </app-product-card>
+                </div>
+
+                <nav class="pagination" *ngIf="response.totalPages > 1">
+                    <ul class="pagination-list">
+                        <li class="page-item" [class.disabled]="response.pageNumber === 1">
+                            <button class="page-link"
+                                (click)="goToPage(response.pageNumber - 1, response.totalPages)">Trước</button>
+                        </li>
+                        <li class="page-item" *ngFor="let page of [].constructor(response.totalPages); let i = index"
+                            [class.active]="i + 1 === response.pageNumber">
+                            <button class="page-link" (click)="goToPage(i + 1, response.totalPages)">{{ i + 1
+                                }}</button>
+                        </li>
+                        <li class="page-item" [class.disabled]="response.pageNumber === response.totalPages">
+                            <button class="page-link"
+                                (click)="goToPage(response.pageNumber + 1, response.totalPages)">Sau</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <ng-template #loadingOrError>
+                <p *ngIf="!loadingError; else errorMsg">Đang tải sản phẩm...</p>
+                <ng-template #errorMsg>
+                    <p style="color: red;">Không thể tải danh sách sản phẩm. Vui lòng thử lại sau.</p>
+                </ng-template>
+            </ng-template>
+
+        </main>
+    </div>
+</div>

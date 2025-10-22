@@ -21,6 +21,7 @@ export class FeaturedProductsComponent implements OnInit {
   loadingError = false;
 
   ngOnInit(): void {
+    console.log('FeaturedProductsComponent OnInit');
     this.featuredProducts$ = this.productService.getFeaturedProducts().pipe(
       catchError(err => {
         console.error('Lỗi tải sản phẩm nổi bật:', err);
