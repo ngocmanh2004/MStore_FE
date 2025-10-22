@@ -1,1 +1,15 @@
-<p>product-gallery works!</p>
+<div class="gallery-container" *ngIf="images.length > 0">
+  <div class="main-image">
+    <img [src]="selectedImageUrl" alt="Ảnh sản phẩm chính">
+  </div>
+
+  <div class="thumbnail-list">
+    <div
+      class="thumbnail-item"
+      *ngFor="let image of images"
+      [class.active]="image.imageUrl === selectedImageUrl"
+      (click)="selectImage(image.imageUrl)">
+      <img [src]="image.imageUrl" alt="Ảnh thumbnail">
+    </div>
+  </div>
+</div>

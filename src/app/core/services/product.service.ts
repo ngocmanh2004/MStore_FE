@@ -12,7 +12,7 @@ import { PaginationResponseDto } from '../models/pagination-response.dto';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'https://localhost:7193/api'; // Đảm bảo cổng đúng
+  private apiUrl = 'https://localhost:7193/api'; 
 
   constructor(private http: HttpClient) { }
 

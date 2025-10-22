@@ -13,7 +13,7 @@
             <div class="nav-item-dropdown" *ngFor="let category of categories">
               <a [routerLink]="['/products/category', category.slug]" routerLinkActive="active">{{ category.name }}</a>
 
-              <div *ngIf="category.children.length" class="dropdown-menu">
+              <div *ngIf="category.children?.length" class="dropdown-menu">
                 <ng-container *ngFor="let child of category.children">
                   <a [routerLink]="['/products/category', child.slug]" class="dropdown-item">{{ child.name }}</a>
                 </ng-container>
@@ -37,13 +37,11 @@
 
         <a routerLink="/cart" class="action-btn icon-btn cart-btn-mobile">
           <i class="bi bi-cart3"></i>
-          <span class="action-badge">3</span>
         </a>
 
         <a routerLink="/cart" class="btn btn-cart-desktop">
           <span>Giỏ hàng</span>
           <i class="bi bi-cart3"></i>
-          <span class="action-badge">3</span>
         </a>
 
         <a routerLink="/auth/login" class="action-btn icon-btn user-btn-mobile">

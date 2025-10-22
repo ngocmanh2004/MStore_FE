@@ -1,42 +1,27 @@
 <div class="product-card">
-  <div *ngIf="product.discountTag" class="product-tag">{{ product.discountTag }}</div>
-
-  <a [routerLink]="['/product', product.id]" class="product-image-link">
-    <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+  <a [routerLink]="['/products', product.slug]" class="product-image-link">
+    <img class="product-image" [src]="product.primaryImageUrl || 'assets/img/placeholder.png'" [alt]="product.name">
   </a>
 
   <div class="product-content">
-    <a [routerLink]="['/product', product.id]" class="product-name">{{ product.name }}</a>
-    
-    <div class="product-rating" *ngIf="product.rating > 0">
-      <i class="bi bi-star-fill star-icon"></i>
-      <span>{{ product.rating }}</span>
+    <a [routerLink]="['/products', product.slug]" class="product-name">
+      {{ product.name }}
+    </a>
+
+    <div class="product-rating">
+      <i class="bi bi-star-fill star-icon"></i> {{ product.averageRating.toFixed(1) }}
       <span class="review-count">({{ product.reviewCount }})</span>
-      <span *ngIf="product.hasFastDelivery" class="fast-delivery-icon">
-        <i class="bi bi-truck"></i> Giao nhanh
-      </span>
-    </div>
+      </div>
 
     <div class="product-price">
-      <span class="current-price">{{ product.price | number:'1.0-0' }}₫</span>
-      <span *ngIf="product.oldPrice" class="old-price">{{ product.oldPrice | number:'1.0-0' }}₫</span>
-    </div>
-
-    <div class="product-extra-info">
-       <span *ngIf="product.isGenuine" class="info-item">
-         <i class="bi bi-patch-check-fill"></i> Chính hãng
-       </span>
-       <span class="info-item">
-         <i class="bi bi-arrow-repeat"></i> Đổi trả 30 ngày
-       </span>
-    </div>
-    <div class="product-saving" *ngIf="product.savingAmount">
-      Tiết kiệm {{ product.savingAmount | number:'1.0-0' }}₫
+      <span class="current-price">{{ product.price | number }}đ</span>
+      <span class="old-price" *ngIf="product.oldPrice">{{ product.oldPrice | number }}đ</span>
     </div>
 
     <div class="product-actions">
-      <a [routerLink]="['/product', product.id]" class="btn btn-secondary btn-detail">Chi tiết</a>
-      <button (click)="addToCart()" class="btn btn-primary btn-buy">Mua ngay</button>
-    </div>
+       <a [routerLink]="['/products', product.slug]" class="btn btn-secondary btn-detail">Chi tiết</a>
+       <button class="btn btn-primary btn-buy">Mua ngay</button>
+     </div>
+
   </div>
 </div>

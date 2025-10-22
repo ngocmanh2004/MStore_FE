@@ -1,32 +1,50 @@
 <section class="category-grid-section">
-  <div class="container">
-    
-    <div *ngFor="let group of categoryGroups" class="category-block">
-      
+  <div class="container" *ngIf="(categoryGroups$ | async) as groups; else loadingOrError">
+
+    <div *ngFor="let group of groups" class="category-block">
+
       <div class="category-header">
-        <h2>{{ group.categoryName }} NỔI BẬT NHẤT</h2>
+        <h2>{{ group.category.name }} NỔI BẬT NHẤT</h2>
         <div class="brand-pills">
-          <a *ngFor="let brand of group.brands" [routerLink]="brand.link" class="brand-pill">
+          <a *ngFor="let brand of group.brands"
+             [routerLink]="['/products', group.category.slug]"
+             [queryParams]="{ brand: brand.name.toLowerCase() }"
+             class="brand-pill">
             {{ brand.name }}
           </a>
         </div>
       </div>
 
-      <div class="products-grid-2rows">
-        <app-product-card 
-          *ngFor="let product of group.products" 
+      <div class="products-grid-2rows" *ngIf="(group.products$ | async) as products; else loadingProducts">
+        <app-product-card
+          *ngFor="let product of products"
           [product]="product">
         </app-product-card>
+        <p *ngIf="products.length === 0">Không có sản phẩm nào trong danh mục này.</p>
       </div>
+       <ng-template #loadingProducts>
+         <p>Đang tải sản phẩm...</p>
+       </ng-template>
+
 
       <div class="view-more-container">
-        <a [routerLink]="['/products', group.categoryId]" class="btn btn-primary btn-view-more">
-          Xem thêm {{ group.categoryName }}
+        <a [routerLink]="['/products', group.category.slug]" class="btn btn-primary btn-view-more">
+          Xem thêm {{ group.category.name }}
           <i class="bi bi-arrow-right"></i>
         </a>
       </div>
 
-    </div> 
+    </div>
+
+     <p *ngIf="groups.length === 0 && !loadingError">Không tìm thấy danh mục nào.</p>
 
   </div>
+
+  <ng-template #loadingOrError>
+     <p *ngIf="!loadingError; else errorMsg">Đang tải danh mục sản phẩm...</p>
+     <ng-template #errorMsg>
+       <p style="color: red;">Không thể tải danh mục. Vui lòng thử lại sau.</p>
+     </ng-template>
+  </ng-template>
+
 </section>

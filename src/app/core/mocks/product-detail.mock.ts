@@ -122,9 +122,45 @@ export const MOCK_PRODUCT_DETAIL = {
   ],
 
 relatedProducts: [
-    { id: '1', name: 'iPhone 15 Pro', imageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-pro-max_2.png', price: 24990000, oldPrice: 28990000, discountTag: '-11%', rating: 4.8, reviewCount: 301 },
-    { id: '5', name: 'iPhone 15', imageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus-256gb-color-pink-image_3_1.png', price: 19990000, oldPrice: 21990000, discountTag: 'Giá tốt', rating: 4.7, reviewCount: 1024 },
-    { id: '4', name: 'AirPods Pro (Gen 2)', imageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/a/i/airpods-pro-2-2.png', price: 6490000, oldPrice: 7190000, discountTag: '-7%', rating: 4.9, reviewCount: 512 },
-    { id: '9', name: 'MagSafe Charger', imageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/magsafe-charger-1-1.png', price: 1290000, oldPrice: 1590000, discountTag: '-12%', rating: 4.6, reviewCount: 220 }
+    {
+      productId: 1, // Sửa id -> productId
+      name: 'iPhone 15 Pro',
+      slug: 'iphone-15-pro', // Thêm slug (tạm thời)
+      primaryImageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-pro-max_2.png', // Sửa imageUrl -> primaryImageUrl
+      price: 24990000,
+      oldPrice: 28990000,
+      averageRating: 4.8, // Sửa rating -> averageRating
+      reviewCount: 301
+    },
+    {
+      productId: 5, // Sửa id -> productId
+      name: 'iPhone 15',
+      slug: 'iphone-15', // Thêm slug
+      primaryImageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-15-plus-256gb-color-pink-image_3_1.png', // Sửa imageUrl -> primaryImageUrl
+      price: 19990000,
+      oldPrice: 21990000,
+      averageRating: 4.7, // Sửa rating -> averageRating
+      reviewCount: 1024
+    },
+    {
+      productId: 4, // Sửa id -> productId
+      name: 'AirPods Pro (Gen 2)',
+      slug: 'airpods-pro-gen-2', // Thêm slug
+      primaryImageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/a/i/airpods-pro-2-2.png', // Sửa imageUrl -> primaryImageUrl
+      price: 6490000,
+      oldPrice: 7190000,
+      averageRating: 4.9, // Sửa rating -> averageRating
+      reviewCount: 512
+    },
+    {
+      productId: 9, // Sửa id -> productId
+      name: 'MagSafe Charger',
+      slug: 'magsafe-charger', // Thêm slug
+      primaryImageUrl: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/magsafe-charger-1-1.png', // Sửa imageUrl -> primaryImageUrl
+      price: 1290000,
+      oldPrice: 1590000,
+      averageRating: 4.6, // Sửa rating -> averageRating
+      reviewCount: 220
+    }
   ]
 };

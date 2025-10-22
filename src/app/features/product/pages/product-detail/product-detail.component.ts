@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MOCK_PRODUCT_DETAIL } from '../../../../core/mocks/product-detail.mock'; 
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { ProductService } from '../../../../core/services/product.service';
+import { ProductDetailDto, ImageDto } from '../../../../core/models/product-detail.dto';
 import { ProductGalleryComponent } from '../../../../shared/components/product-gallery/product-gallery.component';
 import { ProductInfoComponent } from '../../../../shared/components/product-info/product-info.component';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
-import { of } from 'rxjs';
-
-type ProductDetail = typeof MOCK_PRODUCT_DETAIL;
 
 @Component({
   selector: 'app-product-detail',
@@ -23,32 +23,43 @@ type ProductDetail = typeof MOCK_PRODUCT_DETAIL;
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  
-  product: ProductDetail | null = null;
-  activeTab: 'description' | 'specs' | 'reviews' = 'description';
-  
-  currentVariantImages: ProductDetail['variants'][0]['images'] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+
+  product$: Observable<ProductDetailDto | null> = of(null);
+  errorLoadingProduct: boolean = false;
+  activeTab: 'description' | 'specs' | 'reviews' = 'description';
+  currentVariantImages: ImageDto[] = [];
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
-    
-    of(MOCK_PRODUCT_DETAIL).subscribe(data => {
-      this.product = data;
-      
-      if (data.variants.length > 0) {
-        this.currentVariantImages = data.variants[0].images;
-      }
-      
-      window.scrollTo(0, 0);
-    });
+
+    if (slug) {
+      this.product$ = this.productService.getProductBySlug(slug).pipe(
+        tap(data => {
+          if (data?.variants?.length > 0) {
+            this.currentVariantImages = data.variants[0].images;
+          }
+          this.errorLoadingProduct = false;
+          window.scrollTo(0, 0);
+        }),
+        catchError(err => {
+          console.error('Lỗi khi tải sản phẩm:', err);
+          this.errorLoadingProduct = true;
+          return of(null);
+        })
+      );
+    } else {
+      console.error('Không tìm thấy slug sản phẩm!');
+      this.errorLoadingProduct = true;
+    }
   }
 
-  onVariantChanged(images: ProductDetail['variants'][0]['images']): void {
+  onVariantChanged(images: ImageDto[]): void {
     this.currentVariantImages = images;
   }
-  
+
   onAddToCart(event: { variantId: number; quantity: number }): void {
     console.log('Thêm vào giỏ:', event);
   }

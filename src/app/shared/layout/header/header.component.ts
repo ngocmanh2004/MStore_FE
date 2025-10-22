@@ -1,13 +1,10 @@
-import { Component, HostListener, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID, OnInit, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
-
-interface MainCategory {
-  slug: string;
-  name: string;
-  children: { slug: string; name: string }[];
-}
+import { catchError } from 'rxjs/operators';
+import { ProductService } from '../../../core/services/product.service';
+import { CategoryDto } from '../../../core/models/category.dto';
 
 @Component({
   selector: 'app-header',
@@ -22,32 +19,30 @@ export class HeaderComponent implements OnInit {
   isHidden = false;
   lastScrollTop = 0;
 
-  mainCategories$: Observable<MainCategory[]> = of([]);
+  private productService = inject(ProductService);
+  mainCategories$: Observable<CategoryDto[]> = of([]);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.mainCategories$ = of([
-      { slug: 'dien-thoai', name: 'Điện thoại', children: [] },
-      { slug: 'laptop', name: 'Laptop', children: [] },
-      { slug: 'may-tinh-bang', name: 'Máy tính bảng', children: [] },
-      { slug: 'phu-kien', name: 'Phụ kiện', children: [] }
-    ]);
+    this.mainCategories$ = this.productService.getCategories().pipe(
+      catchError(err => {
+        console.error('Lỗi tải danh mục cho header:', err);
+        return of([]);
+      })
+    );
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (isPlatformBrowser(this.platformId)) {
       const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
       this.isScrolled = currentScroll > 50;
-
       if (currentScroll > this.lastScrollTop && currentScroll > 100) {
         this.isHidden = true;
       } else {
         this.isHidden = false;
       }
-
       this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }
   }

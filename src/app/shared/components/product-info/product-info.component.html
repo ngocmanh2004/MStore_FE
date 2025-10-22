@@ -15,8 +15,12 @@
     <span class="current-price">{{ currentVariant.price | number }}đ</span>
     <span class="old-price" *ngIf="currentVariant.oldPrice">{{ currentVariant.oldPrice | number }}đ</span>
     <span class="saving" *ngIf="currentVariant.oldPrice">
-      Tiết kiệm {{ (currentVariant.oldPrice - currentVariant.price) | number }}đ
-    </span>
+   Tiết kiệm {{ (currentVariant.oldPrice - currentVariant.price) | number }}đ
+ </span>
+
+ <span class="saving" *ngIf="currentVariant && currentVariant.oldPrice">
+   Tiết kiệm {{ (currentVariant.oldPrice - currentVariant.price) | number }}đ
+ </span>
   </div>
   <ng-template #variantNotFound>
     <div class="variant-not-found">
